@@ -2,17 +2,13 @@
 
 // Function to hide the targeted elements on YouTube
 function hideYtdRichShelfRenderer() {
-    // weird bug where the foreach wasn't stopping display of the shorts, changed out to elements.remove, foreach may be redundant
     const elements = document.querySelectorAll('ytd-rich-shelf-renderer[is-shorts]');
     elements.forEach(element => {
         element.style.display = 'none';
         console.log('removed shorts');
     });
-    if (elements) {
-        console.log('removed shorts');
-        elements.remove();
-    }
 }
+
 // Function to hide and remove elements inside <a> tags with aria-label="reel"
 function hideReelElements() {
     const reelLinks = document.querySelectorAll('a[aria-label="reel"]');
@@ -21,6 +17,7 @@ function hideReelElements() {
         link.innerHTML = '';
     });
 }
+
 // Function to remove the div with aria-label="Reels" on Facebook
 function removeFacebookReels() {
     const reelsDiv = document.querySelector('div[aria-label="Reels"]');
@@ -30,6 +27,7 @@ function removeFacebookReels() {
         reelsDiv.remove();
     }
 }
+
 function removeFacebookReels2() {
     const reelsDiv = document.querySelector('div[aria-label="Reels"]');
     if (reelsDiv) {
@@ -54,31 +52,30 @@ function removeShortsTextElements() {
     });
 }
 
-// Mutation observer to detect changes in the DOM
-const observer = new MutationObserver(mutationsList => {
-    for (const mutation of mutationsList) {
-        if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
-            // Check if on Facebook and remove Reels div
-            hideReelElements();
-            removeFacebookReels();
-            removeFacebookReels2();
-            // hideYtdRichShelfRenderer();
-
-        }
-    }
-});
-
-// Execute the hiding and removal functions when the page finishes loading
-window.addEventListener('load', () => {
+// Function to execute when the page finishes loading
+function onPageLoad() {
     hideYtdRichShelfRenderer();
     removeShortsTextElements();
 
-    // Check if on Facebook and remove Reels div immediately
+    // Check if on Facebook and remove Reels div after a short delay
     if (window.location.hostname.includes('facebook.com')) {
-        removeFacebookReels();
-        removeFacebookReels2();
+        setTimeout(() => {
+            removeFacebookReels();
+            removeFacebookReels2();
+        }, 2000); // Adjust the delay time as needed
     }
+}
 
-    // Observe changes in the DOM
-    observer.observe(document.body, { childList: true, subtree: true });
+// Execute the initial actions when the content script is injected
+onPageLoad();
+
+// Observe changes in the DOM
+const observer = new MutationObserver(onPageLoad);
+observer.observe(document.body, { childList: true, subtree: true });
+
+// Listen for messages from the background script
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    if (message === 'pageLoad') {
+        onPageLoad();
+    }
 });
