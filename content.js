@@ -44,6 +44,8 @@ const observer = new MutationObserver(mutationsList => {
                 removeFacebookReels();
                 removeFacebookReels2();
             }
+            // Remove yt-formatted-string elements containing the text "Shorts"
+            removeShortsTextElements();
         }
     }
 });
