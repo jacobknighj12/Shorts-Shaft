@@ -2,10 +2,14 @@
 
 // Function to hide the targeted elements on YouTube
 function hideYtdRichShelfRenderer() {
+    // weird bug where the foreach wasn't stopping display of the shorts, changed out to elements.remove, foreach may be redundant
     const elements = document.querySelectorAll('ytd-rich-shelf-renderer[is-shorts]');
     elements.forEach(element => {
         element.style.display = 'none';
     });
+    if (elements) {
+        elements.remove();
+    }
 }
 
 // Function to remove the div with aria-label="Reels" on Facebook
@@ -44,8 +48,6 @@ const observer = new MutationObserver(mutationsList => {
                 removeFacebookReels();
                 removeFacebookReels2();
             }
-            // Remove yt-formatted-string elements containing the text "Shorts"
-            removeShortsTextElements();
         }
     }
 });
