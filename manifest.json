@@ -1,14 +1,16 @@
 {
-    "manifest_version": 2,
-    "name": "YouTube Short Element Hider",
-    "version": "1.0",
-    "description": "Hides ytd-rich-shelf-renderer elements with is-shorts prop on YouTube.",
-    "permissions": ["activeTab"],
-    "content_scripts": [
-      {
-        "matches": ["https://www.youtube.com/*"],
-        "js": ["content.js"]
-      }
-    ]
-  }
-  
+  "manifest_version": 2,
+  "name": "YouTube & Facebook Short Element Hider",
+  "version": "1.0",
+  "description": "Hides specific elements on YouTube and Facebook.",
+  "permissions": ["activeTab"],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.youtube.com/*",
+        "https://www.facebook.com/*"
+      ],
+      "js": ["content.js"]
+    }
+  ]
+}
