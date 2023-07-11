@@ -3,7 +3,7 @@
   "name": "YouTube & Facebook Short Element Hider",
   "version": "1.0",
   "description": "Hides specific elements on YouTube and Facebook.",
-  "permissions": ["activeTab"],
+  "permissions": [""],
   "content_scripts": [
     {
       "matches": [
