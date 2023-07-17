@@ -1,9 +1,9 @@
 {
   "manifest_version": 3,
-  "name": "YouTube & Facebook Short Element Hider",
+  "name": "Shorts Shaft",
   "version": "1.0",
   "description": "Hides specific elements on YouTube and Facebook.",
-  "permissions": [""],
+  "permissions": [],
   "content_scripts": [
     {
       "matches": [
